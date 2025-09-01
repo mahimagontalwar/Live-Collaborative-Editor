@@ -1,7 +1,5 @@
 import Editor from "./components/LiveEditor";
 import React from "react";
-import ChatSidebar from "./components/ChatSidebar";
-
 
 const App: React.FC = () => {
   return (
