@@ -3,33 +3,37 @@ import React from "react";
 interface Props {
   original: string;
   edited: string;
-  onClose: () => void;
-  onApply: () => void;
+  onConfirm: () => void;
+  onCancel: () => void;
 }
 
-const PreviewModal: React.FC<Props> = ({ original, edited, onClose, onApply }) => {
+const PreviewModal: React.FC<Props> = ({ original, edited, onConfirm, onCancel }) => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-      <div className="bg-white rounded-lg shadow-lg w-[600px] p-6">
-        <h2 className="text-xl font-bold mb-4">Preview Changes</h2>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <h3 className="font-semibold mb-2">Original</h3>
-            <div className="p-3 border rounded bg-gray-50">{original}</div>
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+      <div className="bg-white rounded-lg p-4 w-1/2 shadow-lg">
+        <h2 className="font-bold mb-2">Preview AI Edit</h2>
+        <div className="flex gap-4">
+          <div className="flex-1 p-2 border border-gray-300">
+            <h3 className="font-semibold mb-1">Original</h3>
+            <p>{original}</p>
           </div>
-          <div>
-            <h3 className="font-semibold mb-2">AI Edited</h3>
-            <div className="p-3 border rounded bg-gray-50">{edited}</div>
+          <div className="flex-1 p-2 border border-gray-300">
+            <h3 className="font-semibold mb-1">AI Suggestion</h3>
+            <p>{edited}</p>
           </div>
         </div>
-
-        <div className="flex justify-end gap-2 mt-6">
-          <button onClick={onClose} className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
-            Cancel
+        <div className="mt-4 flex justify-end gap-2">
+          <button
+            onClick={onConfirm}
+            className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+          >
+            ✅ Confirm
           </button>
-          <button onClick={onApply} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-            Apply
+          <button
+            onClick={onCancel}
+            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+          >
+            ❌ Cancel
           </button>
         </div>
       </div>

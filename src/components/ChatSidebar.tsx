@@ -1,47 +1,29 @@
-import React, { useState } from "react";
-import { getAIResponse } from "../services/aiService";
+import React from "react";
+import ChatInput from "./ChatInput";
 
+interface Message {
+  user: string;
+  ai: string;
+}
 
-const ChatSidebar: React.FC = () => {
-  const [messages, setMessages] = useState<{ role: string; content: string }[]>([]);
-  const [input, setInput] = useState("");
+interface Props {
+  messages: Message[];
+  onSend: (msg: string) => void;
+}
 
-  const sendMessage = async () => {
-    if (!input.trim()) return;
-    const userMessage = { role: "user", content: input };
-    setMessages((prev) => [...prev, userMessage]);
-
-    const response = await getAIResponse(input);
-    setMessages((prev) => [...prev, { role: "assistant", content: response }]);
-
-    setInput("");
-  };
-
+const ChatSidebar: React.FC<Props> = ({ messages, onSend }) => {
   return (
-    <div className="flex flex-col h-full">
-     <div className="flex-1 p-4 space-y-2 overflow-hidden">
-        {messages.map((msg, i) => (
-          <div
-            key={i}
-            className={`p-2 rounded-lg max-w-[80%] ${
-              msg.role === "user" ? "bg-blue-100 self-end" : "bg-gray-200 self-start"
-            }`}
-          >
-            {msg.content}
+    <div className="w-1/3 bg-gray-100 p-4 flex flex-col">
+      <h2 className="font-bold mb-2">Chat with AI</h2>
+      <div className="flex-1 overflow-y-auto mb-2">
+        {messages.map((msg, idx) => (
+          <div key={idx} className="mb-2">
+            <p className="text-gray-800 font-semibold">You: {msg.user}</p>
+            {msg.ai && <p className="text-blue-600 ml-2">AI: {msg.ai}</p>}
           </div>
         ))}
       </div>
-      <div className="p-2 border-t flex gap-2">
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="flex-1 border rounded px-2 py-1"
-          placeholder="Ask AI..."
-        />
-        <button onClick={sendMessage} className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
-          Send
-        </button>
-      </div>
+      <ChatInput onSend={onSend} />
     </div>
   );
 };
