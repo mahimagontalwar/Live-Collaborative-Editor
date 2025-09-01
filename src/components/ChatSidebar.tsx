@@ -19,7 +19,7 @@ const ChatSidebar: React.FC = () => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-1 overflow-auto p-4 space-y-2">
+     <div className="flex-1 p-4 space-y-2 overflow-hidden">
         {messages.map((msg, i) => (
           <div
             key={i}
